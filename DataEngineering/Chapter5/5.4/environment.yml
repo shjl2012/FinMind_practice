@@ -2,7 +2,6 @@ name: FinMind_practice
 channels:
   - conda-forge
   - defaults
-  - intel
 dependencies:
   - python=3.10.14=hd12c33a_0_cpython
   - loguru=0.7.2=py310hff52083_1

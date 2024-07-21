@@ -246,6 +246,8 @@ def main(
                     index=False,
                     chunksize=1000,
                 )
+                db_router.mysql_financialdata_conn.commit()
+                
             except Exception as e:
                 logger.info(e)
 
