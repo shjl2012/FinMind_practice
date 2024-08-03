@@ -10,3 +10,4 @@
 *.python-version
 .coverage
 build/
+*Pipfile.lock
