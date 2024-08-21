@@ -3,7 +3,7 @@ import typing
 import pandas as pd
 import pymysql
 from loguru import logger
-from sqlalchemy import engine
+from sqlalchemy import engine,text
 
 
 def update2mysql_by_pandas(
@@ -21,7 +21,7 @@ def update2mysql_by_pandas(
                 chunksize=1000,
             )
             # 加入Dataframe寫入DB時commit的寫法
-            mysql_conn.commit()
+            # mysql_conn.commit()
 
         except Exception as e:
             logger.info(e)
@@ -106,31 +106,40 @@ def commit(
     mysql_conn: engine.base.Connection = None,
 ):
     logger.info("commit")
+    
+    trans = None  # Ensure trans is initialized
     try:
-        trans = mysql_conn.begin()
+        if mysql_conn.in_transaction():
+            logger.info("Transaction already in progress.")
+            trans = mysql_conn
+        else:
+            trans = mysql_conn.begin()
+
         if isinstance(sql, list):
             for s in sql:
                 try:
+                    # Convert SQL string to SQLAlchemy TextClause
+                    s = text(s) if isinstance(s, str) else s
                     mysql_conn.execution_options(
                         autocommit=False
-                    ).execute(
-                        s
-                    )
+                    ).execute(s)
                 except Exception as e:
                     logger.info(e)
                     logger.info(s)
-                    break
+                    raise  # Reraise to trigger rollback
 
         elif isinstance(sql, str):
+            sql = text(sql)  # Convert SQL string to SQLAlchemy TextClause
             mysql_conn.execution_options(
                 autocommit=False
-            ).execute(
-                sql
-            )
-        trans.commit()
+            ).execute(sql)
+
+        trans.commit()  # Only commit if everything succeeds
     except Exception as e:
-        trans.rollback()
+        if trans is not None:
+            trans.rollback()
         logger.info(e)
+        raise  # Optionally re-raise the exception to propagate it
 
 
 def upload_data(
