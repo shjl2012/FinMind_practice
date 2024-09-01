@@ -16,6 +16,7 @@ def crawler(
     # 使用 getattr, importlib,
     # 根據不同 dataset, 使用相對應的 crawler 收集資料
     # 爬蟲
+    # 呼叫financialdata.crawler中2隻PY檔的crawler函式
     df = getattr(
         importlib.import_module(
             f"financialdata.crawler.{dataset}"

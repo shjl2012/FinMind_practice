@@ -12,10 +12,12 @@ install-python-env:
 	pipenv sync
 
 # 啟動 celery, 專門執行 twse queue 列隊的任務，
+# worker.py啟動狀態下啟動celery
 run-celery-twse:
 	pipenv run celery -A financialdata.tasks.worker worker --loglevel=info --concurrency=1  --hostname=%h -Q twse
 
 # 啟動 celery, 專門執行 tpex queue 列隊的任務，
+# 
 run-celery-tpex:
 	pipenv run celery -A financialdata.tasks.worker worker --loglevel=info --concurrency=1  --hostname=%h -Q tpex
 
