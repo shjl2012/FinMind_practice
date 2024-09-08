@@ -4,13 +4,13 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-fastapi = "==0.63.0"
-pandas = "==1.1.5"
-pymysql = "==1.0.2"
-sqlalchemy = "==1.4.20"
-uvicorn = "==0.14.0"
+fastapi = "==0.103.0"
+uvicorn = "==0.23.2"
+pandas = "==2.2.2"
+pymysql = "==1.1.1"
+sqlalchemy = "==2.0.32"
 
 [dev-packages]
 
 [requires]
-python_version = "3.6"
+python_version = "3.10"
