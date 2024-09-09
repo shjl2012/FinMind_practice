@@ -21,7 +21,7 @@ def update2mysql_by_pandas(
                 chunksize=1000,
             )
             # 加入Dataframe寫入DB時commit的寫法
-            # mysql_conn.commit()
+            mysql_conn.commit()
 
         except Exception as e:
             logger.info(e)
