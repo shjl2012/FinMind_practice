@@ -9,7 +9,7 @@ from financialdata.schema.dataset import check_schema
 
 
 def futures_header():
-    """網頁瀏覽時, 所帶的 request header 參數, 模仿瀏覽器發送 request"""
+    # 網頁瀏覽時, 所帶的 request header 參數, 模仿瀏覽器發送 request
     return {
         "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
         "Accept-Encoding": "gzip, deflate, br",
@@ -32,7 +32,7 @@ def futures_header():
 
 
 def colname_zh2en(df: pd.DataFrame) -> pd.DataFrame:
-    """資料欄位轉換, 英文有助於接下來存入資料庫"""
+    # 資料欄位轉換, 英文有助於接下來存入資料庫
     colname_dict = {
         "交易日期": "date",
         "契約": "FuturesID",
@@ -49,7 +49,14 @@ def colname_zh2en(df: pd.DataFrame) -> pd.DataFrame:
         "交易時段": "TradingSession",
     }
     df = df.drop(
-        ["最後最佳買價", "最後最佳賣價", "歷史最高價", "歷史最低價", "是否因訊息面暫停交易", "價差對單式委託成交量"],
+        [
+            "最後最佳買價",
+            "最後最佳賣價",
+            "歷史最高價",
+            "歷史最低價",
+            "是否因訊息面暫停交易",
+            "價差對單式委託成交量",
+        ],
         axis=1,
     )
     df.columns = [colname_dict[col] for col in df.columns]
@@ -57,7 +64,7 @@ def colname_zh2en(df: pd.DataFrame) -> pd.DataFrame:
 
 
 def clean_data(df: pd.DataFrame) -> pd.DataFrame:
-    """資料清理"""
+    # 資料清理
     df["date"] = df["date"].str.replace("/", "-")
     df["ChangePer"] = df["ChangePer"].str.replace("%", "")
     df["ContractDate"] = df["ContractDate"].astype(str).str.replace(" ", "")
@@ -84,7 +91,7 @@ def clean_data(df: pd.DataFrame) -> pd.DataFrame:
 
 
 def crawler_futures(date: str) -> pd.DataFrame:
-    """期交所爬蟲"""
+    # 期交所爬蟲
     url = "https://www.taifex.com.tw/cht/3/futDataDown"
     form_data = {
         "down_type": "1",
