@@ -1,4 +1,4 @@
-version: '3.0'
+# version: '3.0'
 services:
   scheduler:
     image: crawler:7.2.1
