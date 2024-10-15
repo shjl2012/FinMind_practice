@@ -1,4 +1,5 @@
-version: '3.2'
+# version line obsolete in newer docker-compose version
+# version: '3.2'
 
 services:
   agent:
@@ -15,8 +16,9 @@ services:
       placement:
         constraints: [node.platform.os == linux]
 
+  # 密碼: P@ssw0rd1234
   portainer:
-    image: portainer/portainer-ce:2.0.1 # portainer 官方要求升級
+    image: portainer/portainer-ce:2.21.2
     command: -H tcp://tasks.agent:9001 --tlsskipverify
     ports:
       - "9000:9000"
