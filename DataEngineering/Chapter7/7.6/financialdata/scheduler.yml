@@ -1,7 +1,8 @@
-version: '3.0'
+# version line obsolete in newer docker-compose version
+# version: '3.0'
 services:
-  scheduler:
-    image: linsamtw/crawler:7.2.1
+  crawler_scheduler:
+    image: shjl2012/crawler:7.2.1
     hostname: "twse"
     command: pipenv run python financialdata/scheduler.py
     restart: always

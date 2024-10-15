@@ -59,7 +59,7 @@ tag-image:
 	docker tag crawler:7.2.1 linsamtw/crawler:7.2.1
 
 push-image:
-	docker push linsamtw/crawler:7.2.1
+	docker push shjl2012/crawler:7.2.1
 
 run-scheduler:
 	pipenv run python financialdata/scheduler.py

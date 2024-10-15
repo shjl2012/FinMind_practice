@@ -1,7 +1,8 @@
-version: '3.0'
+# version line obsolete in newer docker-compose version
+# version: '3.0'
 services:
   crawler_twse:
-    image: linsamtw/crawler:7.2.1
+    image: shjl2012/crawler:7.2.1
     hostname: "twse"
     command: pipenv run celery -A financialdata.tasks.worker worker --loglevel=info --concurrency=1  --hostname=%h -Q twse
     restart: always

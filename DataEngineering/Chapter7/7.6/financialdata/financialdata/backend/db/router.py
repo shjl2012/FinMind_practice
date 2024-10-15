@@ -2,12 +2,16 @@ import time
 import typing
 
 from loguru import logger
-from sqlalchemy import engine
+from sqlalchemy import engine,text,select
 from financialdata.backend.db import clients
 
 
 def check_alive(connect: engine.base.Connection):
-    connect.execute("SELECT 1 + 1")
+    # 在每次使用之前，先確認 connect 是否活者
+    # connect.execute("SELECT 1 + 1")
+    # Updated syntax for sqlalchemy 2.0.31
+    query = select(text("1 + 1"))
+    connect.execute(query)
 
 
 def check_connect_alive(
