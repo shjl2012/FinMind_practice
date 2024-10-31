@@ -7,7 +7,7 @@ from financialdata.config import (
 )
 from sqlalchemy import create_engine, engine
 
-
+# 產生連線到SQL的sqlalchemy.engine物件
 def get_mysql_financialdata_conn() -> engine.base.Connection:
     address = (
         f"mysql+pymysql://{MYSQL_DATA_USER}:{MYSQL_DATA_PASSWORD}"

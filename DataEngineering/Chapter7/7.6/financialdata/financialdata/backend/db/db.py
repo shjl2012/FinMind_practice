@@ -5,7 +5,7 @@ import pymysql
 from loguru import logger
 from sqlalchemy import engine,text
 
-
+# 被upload_data呼叫
 def update2mysql_by_pandas(
     df: pd.DataFrame,
     table: str,
@@ -28,7 +28,7 @@ def update2mysql_by_pandas(
             return False
     return True
 
-
+# 被build_df_update_sql呼叫
 def build_update_sql(
     colname: typing.List[str],
     value: typing.List[str],
@@ -45,7 +45,7 @@ def build_update_sql(
     )
     return update_sql
 
-
+# 被update2mysql_by_sql呼叫
 def build_df_update_sql(
     table: str,
     df: pd.DataFrame
@@ -88,7 +88,7 @@ def build_df_update_sql(
         sql_list.append(sql)
     return sql_list
 
-
+# 被upload_data呼叫
 def update2mysql_by_sql(
     df: pd.DataFrame,
     table: str,
@@ -147,12 +147,13 @@ def commit(
         logger.info(e)
         raise
 
-# 供task.py呼叫進行實際資料上傳作業
+# 由task.py呼叫
 def upload_data(
     df: pd.DataFrame,
     table: str,
     mysql_conn: engine.base.Connection,
 ):
+    # 如果有爬到資料，嘗試上傳資料
     if len(df) > 0:
         # 先直接用df.to_sql()上傳
         if update2mysql_by_pandas(
