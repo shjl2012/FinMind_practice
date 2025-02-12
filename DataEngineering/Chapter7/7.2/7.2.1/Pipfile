@@ -16,6 +16,7 @@ pymysql = "*"
 loguru = "*"
 tqdm = "4.66.4"
 apscheduler = "*"
+cryptography = "*"
 
 [requires]
 python_version = "3.10"
