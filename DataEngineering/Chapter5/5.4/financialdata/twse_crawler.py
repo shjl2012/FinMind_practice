@@ -133,6 +133,7 @@ def crawler_twse(
     # 2009 年以後的資料, 股價在 response 中的 data8
     # 不同格式, 在證交所的資料中, 是很常見的,
     # 沒資料的情境也要考慮進去，例如現在週六沒有交易，但在 2007 年週六是有交易的
+    df = pd.DataFrame()
     try:
         if "data9" in res.json():
             df = pd.DataFrame(
