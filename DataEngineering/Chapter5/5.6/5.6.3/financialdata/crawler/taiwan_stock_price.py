@@ -220,7 +220,6 @@ def crawler_twse(
     # 2009 年以後的資料, 股價在 response 中的 data8
     # 不同格式, 在證交所的資料中, 是很常見的,
     # 沒資料的情境也要考慮進去，例如現在週六沒有交易，但在 2007 年週六是有交易的
-    df = pd.DataFrame()
     try:
         if "data9" in res.json():
             df = pd.DataFrame(
@@ -240,7 +239,17 @@ def crawler_twse(
             "查詢日期小於93年2月11日，請重新查詢!",
             "很抱歉，沒有符合條件的資料!",
         ]:
-            pass
+            return pd.DataFrame()
+        else:
+            tables = res.json().get(
+                "tables", [{}]
+            )
+            df = pd.DataFrame(
+                tables[8]["data"]
+            )
+            colname = tables[8][
+                "fields"
+            ]
     except Exception as e:
         logger.error(e)
         return pd.DataFrame()
@@ -312,4 +321,6 @@ def crawler(
         df.copy(),
         dataset="TaiwanStockPrice",
     )
+    if len(df) == 0:
+        logger.info(f"No data for {date}")
     return df
