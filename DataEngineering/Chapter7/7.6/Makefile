@@ -19,5 +19,3 @@ deploy-crawler-scheduler:
 
 deploy-api:
 	docker stack deploy --with-registry-auth -c api/api.yml api
-
-test
